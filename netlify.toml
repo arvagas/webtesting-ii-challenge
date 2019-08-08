@@ -1,0 +1,4 @@
+[build]
+base = "baseball/"
+publish = "baseball/build/"
+command = "yarn build"
