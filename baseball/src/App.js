@@ -1,11 +1,17 @@
-import React from 'react';
+import React from 'react'
 
-function App() {
-  return (
-    <div className="App">
-        <h1>Hello World</h1>
-    </div>
-  );
+import { Container } from './StyledComps'
+
+class App extends React.Component {
+
+  render() {
+  
+    return (
+      <Container>
+          <h1>Hello World</h1>
+      </Container>
+    )
+  }
 }
 
-export default App;
+export default App
