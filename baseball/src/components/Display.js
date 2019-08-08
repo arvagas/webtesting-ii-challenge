@@ -1,8 +1,10 @@
 import React from 'react'
 
-import { InfoCont } from '../StyledComps'
+import InningInfo from './InningInfo'
 
-const Display = ({ inning, balls, strikes, fouls, hits, outs }) => {
+import { InfoCont, StyledTable } from '../StyledComps'
+
+const Display = ({ inning, balls, strikes, fouls, hits, outs, inningData }) => {
     return (
         <>
             <h1>Display Board</h1>
@@ -32,6 +34,19 @@ const Display = ({ inning, balls, strikes, fouls, hits, outs }) => {
                     <p>{outs}</p>
                 </InfoCont>
             </div>
+            <h1>Inning Information</h1>
+            <StyledTable>
+                <tr style={{width:'100%'}}>
+                    <th>Inning</th>
+                    <th>Balls Thrown</th>
+                    <th>Strikes Thrown</th>
+                    <th>Foul Hits</th>
+                    <th>Pretty Good Hits</th>
+                </tr>
+                {inningData.map(item => (
+                    <InningInfo item={item} />
+                ))}
+            </StyledTable>
         </>
     )
 }

@@ -88,6 +88,7 @@ class App extends React.Component {
         balls: 0,
         strikes: 0,
         fouls: 0,
+        hits: 0,
         outs: 0,
 
         inningData: [...this.state.inningData, {
@@ -114,8 +115,8 @@ class App extends React.Component {
   
     return (
       <Container>
-          <Display inning={this.state.inning} balls={this.state.balls} strikes={this.state.strikes} fouls={this.state.fouls} hits={this.state.hits} outs={this.state.outs}/>
           <Dashboard ballsHandler={this.ballsHandler} strikesHandler={this.strikesHandler} foulsHandler={this.foulsHandler} hitsHandler={this.hitsHandler} outsHandler={this.outsHandler}/>
+          <Display inning={this.state.inning} balls={this.state.balls} strikes={this.state.strikes} fouls={this.state.fouls} hits={this.state.hits} outs={this.state.outs} inningData={this.state.inningData}/>
       </Container>
     )
   }
