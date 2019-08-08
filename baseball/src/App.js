@@ -7,10 +7,18 @@ import { Container } from './StyledComps'
 
 class App extends React.Component {
   state = {
+    inning: 1,
     balls: 0,
     strikes: 0,
     fouls: 0,
     hits: 0,
+    outs: 0,
+    
+    inningData: [],
+    ballsTotal: 0,
+    strikesTotal: 0,
+    foulsTotal: 0,
+    hitsTotal: 0,
   }
 
   ballsHandler = () => {
@@ -21,6 +29,10 @@ class App extends React.Component {
         fouls: 0
       })
     } else this.setState({balls: this.state.balls + 1})
+
+    this.setState({
+      ballsTotal: this.state.ballsTotal + 1
+    })
   }
 
   strikesHandler = () => {
@@ -28,9 +40,14 @@ class App extends React.Component {
       this.setState({
         balls: 0,
         strikes: 0,
-        fouls: 0
+        fouls: 0,
+        strikesTotal: this.state.strikesTotal + 1
       })
-    } else this.setState({strikes: this.state.strikes + 1})
+      this.outsHandler(1)
+    } else this.setState({
+      strikes: this.state.strikes + 1,
+      strikesTotal: this.state.strikesTotal + 1
+    })
   }
 
   foulsHandler = () => {
@@ -45,6 +62,11 @@ class App extends React.Component {
         fouls: this.state.fouls + 1
       })
     } else this.setState({fouls: this.state.fouls + 1})
+
+    
+    this.setState({
+      foulsTotal: this.state.foulsTotal + 1
+    })
   }
 
   hitsHandler = () => {
@@ -52,7 +74,39 @@ class App extends React.Component {
       balls: 0,
       strikes: 0,
       fouls: 0,
-      hits: this.state.hits + 1
+      hits: this.state.hits + 1,
+      hitsTotal: this.state.hitsTotal + 1
+    })
+  }
+
+  outsHandler = (num) => {
+    let extra = typeof(num) === 'number' ? num : 0
+
+    if (this.state.outs === 2) {
+      this.setState({
+        inning: this.state.inning + 1,
+        balls: 0,
+        strikes: 0,
+        fouls: 0,
+        outs: 0,
+
+        inningData: [...this.state.inningData, {
+          inning: this.state.inning,
+          ballsTotal: this.state.ballsTotal,
+          strikesTotal: this.state.strikesTotal + extra,
+          foulsTotal: this.state.foulsTotal,
+          hitsTotal: this.state.hitsTotal,
+        }],
+        ballsTotal: 0,
+        strikesTotal: 0,
+        foulsTotal: 0,
+        hitsTotal: 0
+      })
+    } else this.setState({
+      balls: 0,
+      strikes: 0,
+      fouls: 0,
+      outs: this.state.outs + 1
     })
   }
 
@@ -60,8 +114,8 @@ class App extends React.Component {
   
     return (
       <Container>
-          <Display balls={this.state.balls} strikes={this.state.strikes} fouls={this.state.fouls} hits={this.state.hits}/>
-          <Dashboard ballsHandler={this.ballsHandler} strikesHandler={this.strikesHandler} foulsHandler={this.foulsHandler} hitsHandler={this.hitsHandler}/>
+          <Display inning={this.state.inning} balls={this.state.balls} strikes={this.state.strikes} fouls={this.state.fouls} hits={this.state.hits} outs={this.state.outs}/>
+          <Dashboard ballsHandler={this.ballsHandler} strikesHandler={this.strikesHandler} foulsHandler={this.foulsHandler} hitsHandler={this.hitsHandler} outsHandler={this.outsHandler}/>
       </Container>
     )
   }
